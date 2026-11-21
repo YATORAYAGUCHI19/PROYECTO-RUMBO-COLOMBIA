@@ -50,4 +50,37 @@ public class GrafoCiudades implements Serializable {
         }
         return grafo.agregarArista(ciudadOrigen, ciudadDestino, minutos);
     }
+
+    // Costo mínimo entre dos ciudades (infinito si no hay camino)
+    public double costoMinimo(String origen, String destino) {
+        Ciudad ciudadOrigen = buscarCiudad(origen);
+        Ciudad ciudadDestino = buscarCiudad(destino);
+        if (ciudadOrigen == null || ciudadDestino == null) {
+            return Double.POSITIVE_INFINITY;
+        }
+        return grafo.costoMinimo(ciudadOrigen, ciudadDestino);
+    }
+
+    // Ciudades a seguir, en orden (lista vacía si no hay ruta)
+    public List<Ciudad> buscarRuta(String origen, String destino) {
+        Ciudad ciudadOrigen = buscarCiudad(origen);
+        Ciudad ciudadDestino = buscarCiudad(destino);
+        if (ciudadOrigen == null || ciudadDestino == null) {
+            return new ArrayList<>();
+        }
+        return grafo.buscarRuta(ciudadOrigen, ciudadDestino);
+    }
+
+    // Tour saliendo de una ciudad, sin importar el costo
+    public List<Ciudad> recorrerTour(String origen) {
+        List<Ciudad> tour = new ArrayList<>();
+        Ciudad ciudadOrigen = buscarCiudad(origen);
+        if (ciudadOrigen == null) {
+            return tour;
+        }
+        for (Vertice<Ciudad> vertice : grafo.recorridoAnchura(ciudadOrigen)) {
+            tour.add(vertice.dato);
+        }
+        return tour;
+    }
 }

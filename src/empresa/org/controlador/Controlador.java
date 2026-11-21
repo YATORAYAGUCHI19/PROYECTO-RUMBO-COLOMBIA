@@ -52,4 +52,17 @@ public class Controlador {
         }
         return agregada;
     }
+
+    public double costoMinimo(String origen, String destino) {
+        return red.costoMinimo(origen, destino);
+    }
+
+    public List<Ciudad> buscarRuta(String origen, String destino) {
+        return red.buscarRuta(origen, destino);
+    }
+
+    public List<Ciudad> recorrerTour(String origen) {
+        return red.recorrerTour(origen);
+    }
+    
 }

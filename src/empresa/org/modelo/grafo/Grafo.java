@@ -73,7 +73,7 @@ public class Grafo<E> implements Serializable {
     public List<Vertice<E>> recorridoAnchura(E origen) {
         List<Vertice<E>> visitados = new ArrayList<>();
         Vertice<E> inicio = buscarVertice(origen);
-        
+
         if (inicio == null) {
             return visitados;
         }
@@ -90,5 +90,85 @@ public class Grafo<E> implements Serializable {
             }
         }
         return visitados;
+    }
+
+    private int posicion(E dato) {
+        for (int i = 0; i < vertices.size(); i++) {
+            if (vertices.get(i).dato.equals(dato)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void floyd(double[][] f, int[][] r) {
+        int n = vertices.size();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                r[i][j] = -1;
+                if (i == j) {
+                    f[i][j] = 0;
+                } else {
+                    f[i][j] = Double.POSITIVE_INFINITY;
+                }
+            }
+            for (Arista<E> arista : vertices.get(i).aristas) {
+                f[i][posicion(arista.destino.dato)] = arista.costo;
+            }
+        }
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (f[i][k] + f[k][j] < f[i][j]) {
+                        f[i][j] = f[i][k] + f[k][j];
+                        r[i][j] = k;
+                    }
+                }
+            }
+        }
+    }
+
+    public double costoMinimo(E origen, E destino) {
+        int a = posicion(origen);
+        int b = posicion(destino);
+        if (a == -1 || b == -1) {
+            return Double.POSITIVE_INFINITY;
+        }
+        int n = vertices.size();
+        double[][] f = new double[n][n];
+        int[][] r = new int[n][n];
+        floyd(f, r);
+        return f[a][b];
+    }
+
+    public List<E> buscarRuta(E origen, E destino) {
+        List<E> ruta = new ArrayList<>();
+        int a = posicion(origen);
+        int b = posicion(destino);
+        if (a == -1 || b == -1) {
+            return ruta;
+        }
+        int n = vertices.size();
+        double[][] f = new double[n][n];
+        int[][] r = new int[n][n];
+        floyd(f, r);
+        if (f[a][b] == Double.POSITIVE_INFINITY) {
+            return ruta;
+        }
+        ruta.add(vertices.get(a).dato);
+        if (a != b) {
+            agregarIntermedios(a, b, r, ruta);
+            ruta.add(vertices.get(b).dato);
+        }
+        return ruta;
+    }
+
+    private void agregarIntermedios(int i, int j, int[][] r, List<E> ruta) {
+        int k = r[i][j];
+        if (k != -1) {
+            agregarIntermedios(i, k, r, ruta);
+            ruta.add(vertices.get(k).dato);
+            agregarIntermedios(k, j, r, ruta);
+        }
     }
 }
