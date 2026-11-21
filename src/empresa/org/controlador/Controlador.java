@@ -52,12 +52,4 @@ public class Controlador {
         }
         return agregada;
     }
-
-    public List<Ciudad> buscarRuta(String origen, String destino) {
-        return red.buscarRuta(origen, destino);
-    }
-
-    public double calcularTiempoRuta(String origen, String destino) {
-        return red.calcularTiempoRuta(origen, destino);
-    }
 }

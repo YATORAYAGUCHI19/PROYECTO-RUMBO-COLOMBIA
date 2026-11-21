@@ -50,31 +50,4 @@ public class GrafoCiudades implements Serializable {
         }
         return grafo.agregarArista(ciudadOrigen, ciudadDestino, minutos);
     }
-
-    public List<Ciudad> buscarRuta(String origen, String destino) {
-        Ciudad ciudadOrigen = buscarCiudad(origen);
-        Ciudad ciudadDestino = buscarCiudad(destino);
-        List<Ciudad> ciudades = new ArrayList<>();
-        if (ciudadOrigen == null || ciudadDestino == null) {
-            return ciudades;
-        }
-        for (Vertice<Ciudad> vertice : grafo.buscarRuta(ciudadOrigen, ciudadDestino)) {
-            ciudades.add(vertice.dato);
-        }
-        return ciudades;
-    }
-
-    public double calcularTiempoRuta(String origen, String destino) {
-        Ciudad ciudadOrigen = buscarCiudad(origen);
-        Ciudad ciudadDestino = buscarCiudad(destino);
-        if (ciudadOrigen == null || ciudadDestino == null) {
-            return -1;
-        }
-        List<Vertice<Ciudad>> ruta = grafo.buscarRuta(ciudadOrigen, ciudadDestino);
-        if (ruta.isEmpty()) {
-            return -1;
-        }
-        return grafo.calcularCostoRuta(ruta);
-    }
-
 }
