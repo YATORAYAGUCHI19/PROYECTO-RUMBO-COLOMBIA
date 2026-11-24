@@ -405,3 +405,7 @@ final class GestionDestinos extends JDialog {
         }
     }
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

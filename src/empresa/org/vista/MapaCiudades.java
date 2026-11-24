@@ -534,3 +534,7 @@ final class MapaCiudades extends JPanel implements Scrollable {
         }
     }
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

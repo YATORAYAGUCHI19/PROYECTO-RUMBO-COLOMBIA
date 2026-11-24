@@ -242,3 +242,7 @@ final class EstiloVista {
         return boton;
     }
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

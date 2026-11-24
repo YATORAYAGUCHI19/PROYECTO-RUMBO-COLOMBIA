@@ -66,3 +66,7 @@ final class RecorridoMapa {
                 tramo.inicio().y + fraccion * dy, Math.atan2(dy, dx));
     }
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

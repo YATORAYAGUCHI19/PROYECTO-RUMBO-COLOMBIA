@@ -178,3 +178,7 @@ final class FichaDestino extends JPanel {
         }
     }
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

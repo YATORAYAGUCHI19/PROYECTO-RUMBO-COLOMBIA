@@ -2,23 +2,29 @@ package empresa.org.modelo;
 
 import empresa.org.modelo.ciudad.Ciudad;
 import empresa.org.modelo.grafo.Grafo;
+import empresa.org.modelo.grafo.GrafoLista;
 import empresa.org.modelo.grafo.Vertice;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GrafoCiudades implements Serializable {
-    private final Grafo<Ciudad> grafo;
+
+    private final GrafoLista<Ciudad> grafo;
 
     public GrafoCiudades() {
-        grafo = new Grafo<>();
+        grafo = new GrafoLista<>();
     }
 
     public boolean agregarCiudad(Ciudad ciudad) {
         if (ciudad == null) {
             throw new IllegalArgumentException("La ciudad no puede ser nula");
         }
-        return grafo.agregarVertice(ciudad);
+        if (grafo.posicion(ciudad) != -1) {
+            return false;
+        }
+        grafo.insVertice(ciudad);
+        return true;
     }
 
     public Ciudad buscarCiudad(String nombre) {
@@ -48,7 +54,13 @@ public class GrafoCiudades implements Serializable {
         if (ciudadOrigen == null || ciudadDestino == null) {
             return false;
         }
-        return grafo.agregarArista(ciudadOrigen, ciudadDestino, minutos);
+        int vi = grafo.posicion(ciudadOrigen);
+        int vf = grafo.posicion(ciudadDestino);
+        if (grafo.costoArista(vi, vf) != Grafo.inf) {
+            return false;
+        }
+        grafo.insArista(vi, vf, minutos);
+        return true;
     }
 
     // Costo mínimo entre dos ciudades (infinito si no hay camino)

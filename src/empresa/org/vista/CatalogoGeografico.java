@@ -64,3 +64,7 @@ final class CatalogoGeografico {
                 .strip();
     }
 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
